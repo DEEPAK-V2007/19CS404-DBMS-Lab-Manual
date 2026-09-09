@@ -104,124 +104,273 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---
--- Paste Question 1 here
+Create a table named Employees with the following constraints:
 
-```sql
--- Paste your SQL code below for Question 1
+EmployeeID should be the primary key. FirstName and LastName should be NOT NULL. Email should be unique. Salary should be greater than 0. DepartmentID should be a foreign key referencing the Departments table. For example:
+
+|Test|Result|
+|----|------|
+|Attempt to insert a record with NULL FirstName
+INSERT INTO Employees (EmployeeID, FirstName, LastName, Email, Salary, DepartmentID)
+VALUES (1, NULL, 'Doe', 'john.doe@example.com', 50000, 1);    |Error: NOT NULL constraint failed: Employees.FirstName      |
+
+```
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Salary DECIMAL(10,2) CHECK (Salary > 0),
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
 ```
 
 **Output:**
 
-![Output1](output.png)
+![alt text](image.png)
 
 **Question 2**
----
--- Paste Question 2 here
+Create a table named Events with the following columns:
 
-```sql
--- Paste your SQL code below for Question 2
+EventID as INTEGER EventName as TEXT EventDate as DATE For example:
+```
+Test	Result
+pragma table_info('Events');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           EventID     INTEGER     0                       0
+1           EventName   TEXT        0                       0
+2           EventDate   DATE        0                       0
+```
+
+```
+CREATE TABLE Events (
+    EventID INTEGER,
+    EventName TEXT,
+    EventDate DATE
+);
 ```
 
 **Output:**
 
-![Output2](output.png)
+![alt text](image-2.png)
 
 **Question 3**
----
--- Paste Question 3 here
+Create a table named Bonuses with the following constraints: BonusID as INTEGER should be the primary key. EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID). BonusAmount as REAL should be greater than 0. BonusDate as DATE. Reason as TEXT should not be NULL.
 
-```sql
--- Paste your SQL code below for Question 3
+```
+Test	Result
+INSERT INTO Bonuses (BonusID, EmployeeID, BonusAmount, BonusDate, Reason) VALUES (1, 6, 1000.0, '2024-08-01', 'Outstanding performance');
+SELECT * FROM Bonuses;
+BonusID     EmployeeID  BonusAmount  BonusDate   Reason
+----------  ----------  -----------  ----------  -----------------------
+1           6           1000.0       2024-08-01  Outstanding performance
+```
+
+```
+CREATE TABLE Bonuses (
+    BonusID INTEGER PRIMARY KEY,
+    EmployeeID INTEGER,
+    BonusAmount REAL CHECK (BonusAmount > 0),
+    BonusDate DATE,
+    Reason TEXT NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+);
 ```
 
 **Output:**
 
-![Output3](output.png)
+![alt text](image-1.png)
 
 **Question 4**
----
--- Paste Question 4 here
+Write an SQL command can to add a column named email of type TEXT to the customers table
 
-```sql
--- Paste your SQL code below for Question 4
+```
+Test	Result
+pragma table_info('Customers');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          integer     0                       0
+1           name        text        0                       0
+2           email       TEXT        0                       0
+```
+
+```
+ALTER TABLE Customers
+ADD COLUMN email TEXT;
 ```
 
 **Output:**
 
-![Output4](output.png)
+![alt text](image-3.png)
 
 **Question 5**
----
--- Paste Question 5 here
+Write a SQL Query to change the name of attribute "name" to "first_name" and add mobilenumber as number ,DOB as Date in the table Companies.
 
-```sql
--- Paste your SQL code below for Question 5
+```
+Test	Result
+pragma table_info('Companies');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          int         0                       0
+1           first_name  varchar(50  0                       0
+2           address     text        0                       0
+3           email       varchar(50  0                       0
+4           phone       varchar(10  0                       0
+5           mobilenumb  number      0                       0
+6           DOB         Date        0                       0
+```
+
+```
+ALTER TABLE Companies RENAME COLUMN name TO first_name;
+
+ALTER TABLE Companies ADD COLUMN mobilenumber number;
+
+ALTER TABLE Companies ADD COLUMN DOB Date;
 ```
 
 **Output:**
 
-![Output5](output.png)
+![alt text](image-4.png)
 
 **Question 6**
----
--- Paste Question 6 here
+Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
 
-```sql
--- Paste your SQL code below for Question 6
+RollNo	Name	Gender
+204	Samuel Black	M
+Note: The Subject and MARKS columns will use their default values.
+
+```
+Test	Result
+SELECT RollNo, Name, Gender 
+FROM Student_details 
+WHERE RollNo = 204;
+
+
+RollNo      Name          Gender
+----------  ------------  ----------
+204         Samuel Black  M
+```
+
+```
+INSERT INTO Student_details (RollNo, Name, Gender)
+VALUES (204, 'Samuel Black', 'M');
 ```
 
 **Output:**
 
-![Output6](output.png)
+![alt text](image-5.png)
 
 **Question 7**
----
--- Paste Question 7 here
+Write a SQL Query for inserting the below values in the table Customers
+```
+ID               NAME             AGE  ADDRESS     SALARY      
+---------------  ---------------  ---  ----------  ----------  
+1                Ramesh           32   Ahmedabad   2000
+2                Khilan           25   Delhi       1500
+3                Kaushik          23   Kota        2000
+```
+For example:
+```
+Test	Result
+SELECT * FROM Customers;
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Ramesh      32          Ahmedabad   2000
+2           Khilan      25          Delhi       1500
+3           Kaushik     23          Kota        2000
+```
 
-```sql
--- Paste your SQL code below for Question 7
+```
+INSERT INTO Customers (ID, NAME, AGE, ADDRESS, SALARY)
+VALUES
+(1, 'Ramesh', 32, 'Ahmedabad', 2000),
+(2, 'Khilan', 25, 'Delhi', 1500),
+(3, 'Kaushik', 23, 'Kota', 2000);
 ```
 
 **Output:**
 
-![Output7](output.png)
+![alt text](image-6.png)
 
 **Question 8**
----
--- Paste Question 8 here
+Create a new table named orders with the following specifications: ord_id as TEXT with a length of 4. item_id as TEXT. ord_date as DATE. ord_qty as INTEGER. cost as INTEGER. The primary key is a composite key consisting of item_id and ord_date. ord_id and item_id should not accept NULL For example:
 
-```sql
--- Paste your SQL code below for Question 8
+```
+Test	Result
+INSERT INTO orders (ord_id, item_id, ord_date, ord_qty, cost) VALUES ('O001', 'I001', '2023-08-01', 10, 100);
+SELECT * FROM orders;
+ord_id      item_id     ord_date    ord_qty     cost
+----------  ----------  ----------  ----------  ----------
+O001        I001        2023-08-01  10          100
+```
+
+```
+CREATE TABLE orders (
+    ord_id VARCHAR(4) NOT NULL,
+    item_id TEXT NOT NULL,
+    ord_date DATE NOT NULL,
+    ord_qty INTEGER,
+    cost INTEGER,
+    PRIMARY KEY (item_id, ord_date)
+);
 ```
 
 **Output:**
 
-![Output8](output.png)
+![alt text](image-7.png)
 
 **Question 9**
----
--- Paste Question 9 here
+Insert all employees from Former_employees into Employee
 
-```sql
--- Paste your SQL code below for Question 9
+Table attributes are EmployeeID, Name, Department, Salary
+
+For example:
+
+```
+Test	Result
+select * from Employee;
+EmployeeID  Name        Department  Salary
+----------  ----------  ----------  ----------
+201         John Doe    HR          50000
+202         Jane Smith  Engineerin  75000
+203         Emily Davi  Marketing   60000
+```
+
+```
+INSERT INTO Employee (EmployeeID, Name, Department, Salary)
+SELECT EmployeeID, Name, Department, Salary
+FROM Former_employees;
 ```
 
 **Output:**
 
-![Output9](output.png)
+![alt text](image-8.png)
 
 **Question 10**
----
--- Paste Question 10 here
+Create a table named ProjectAssignments with the following constraints: AssignmentID as INTEGER should be the primary key. EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID). ProjectID as INTEGER should be a foreign key referencing Projects(ProjectID). AssignmentDate as DATE should be NOT NULL. For example:
 
-```sql
--- Paste your SQL code below for Question 10
+```
+Test	Result
+INSERT INTO ProjectAssignments (AssignmentID, EmployeeID, ProjectID, AssignmentDate) VALUES (2, 99, 1, '2024-01-03');
+Error: FOREIGN KEY constraint failed
+```
+
+```
+CREATE TABLE ProjectAssignments (
+    AssignmentID INTEGER PRIMARY KEY,
+    EmployeeID INTEGER,
+    ProjectID INTEGER,
+    AssignmentDate DATE NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID)
+);
 ```
 
 **Output:**
 
-![Output10](output.png)
+![alt text](image-9.png)
 
 
 ## RESULT
