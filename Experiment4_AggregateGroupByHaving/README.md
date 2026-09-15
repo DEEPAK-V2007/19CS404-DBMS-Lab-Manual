@@ -37,124 +37,162 @@ HAVING condition;
 ```
 
 **Question 1**
---
--- Paste Question 1 here
 
-```sql
--- Paste your SQL code below for Question 1
+![alt text](image.png)
+
+```
+SELECT PatientID,
+       COUNT(*) AS TotalAppointments
+FROM Appointments
+GROUP BY PatientID;
 ```
 
 **Output:**
 
-![Output1](output.png)
+![alt text](image-1.png)
 
 **Question 2**
----
--- Paste Question 2 here
 
-```sql
--- Paste your SQL code below for Question 2
+![alt text](image-2.png)
+
+```
+SELECT InsuranceCompany,
+       COUNT(*) AS TotalExpiredPatients
+FROM Insurance
+WHERE ValidityPeriod < DATE('now')
+GROUP BY InsuranceCompany;
 ```
 
 **Output:**
 
-![Output2](output.png)
+![alt text](image-3.png)
 
 **Question 3**
----
--- Paste Question 3 here
 
-```sql
--- Paste your SQL code below for Question 3
+![alt text](image-4.png)
+
+```
+SELECT DoctorID,
+       strftime('%H:%M', AppointmentDateTime) AS TimeSlot,
+       COUNT(*) AS TotalAppointments
+FROM Appointments
+GROUP BY DoctorID, TimeSlot
+HAVING COUNT(*) = (
+    SELECT MAX(cnt)
+    FROM (
+        SELECT COUNT(*) AS cnt
+        FROM Appointments a2
+        WHERE a2.DoctorID = Appointments.DoctorID
+        GROUP BY strftime('%H:%M', a2.AppointmentDateTime)
+    )
+)
+ORDER BY TotalAppointments DESC;
 ```
 
 **Output:**
 
-![Output3](output.png)
+![alt text](image-5.png)
 
 **Question 4**
----
--- Paste Question 4 here
 
-```sql
--- Paste your SQL code below for Question 4
+![alt text](image-6.png)
+
+```
+SELECT COUNT(*) AS 'COUNT'
+FROM customer
+WHERE city = 'Noida';
 ```
 
 **Output:**
 
-![Output4](output.png)
+![alt text](image-7.png)
 
 **Question 5**
----
--- Paste Question 5 here
 
-```sql
--- Paste your SQL code below for Question 5
+![alt text](image-8.png)
+
+```
+SELECT AVG(income) AS avg_income
+FROM employee
+WHERE name LIKE 'A%';
 ```
 
 **Output:**
 
-![Output5](output.png)
+![alt text](image-9.png)
 
 **Question 6**
----
--- Paste Question 6 here
 
-```sql
--- Paste your SQL code below for Question 6
+![alt text](image-10.png)
+
+```
+SELECT MAX(purch_amt) AS MAXIMUM
+FROM orders;
 ```
 
 **Output:**
 
-![Output6](output.png)
+![alt text](image-11.png)
 
 **Question 7**
----
--- Paste Question 7 here
 
-```sql
--- Paste your SQL code below for Question 7
+![alt text](image-12.png)
+
+```
+SELECT COUNT(DISTINCT salesman_id) AS COUNT
+FROM orders;
 ```
 
 **Output:**
 
-![Output7](output.png)
+![alt text](image-13.png)
 
 **Question 8**
----
--- Paste Question 8 here
 
-```sql
--- Paste your SQL code below for Question 8
+![alt text](image-14.png)
+
+```
+SELECT (age / 5) * 5 AS age_group,
+       MIN(salary) AS "MIN(salary)"
+FROM customer1
+GROUP BY (age / 5) * 5
+HAVING MIN(salary) < 2000;
 ```
 
 **Output:**
 
-![Output8](output.png)
+![alt text](image-15.png)
 
 **Question 9**
----
--- Paste Question 9 here
 
-```sql
--- Paste your SQL code below for Question 9
+![alt text](image-16.png)
+
+```
+SELECT age, SUM(income) AS "SUM(income)"
+FROM employee
+GROUP BY age
+HAVING SUM(income) > 1000000;
 ```
 
 **Output:**
 
-![Output9](output.png)
+![alt text](image-17.png)
 
 **Question 10**
----
--- Paste Question 10 here
 
-```sql
--- Paste your SQL code below for Question 10
+![alt text](image-18.png)
+
+```
+SELECT address,
+       AVG(salary) AS "AVG(salary)"
+FROM customer1
+GROUP BY address
+HAVING AVG(salary) > 5000;
 ```
 
 **Output:**
 
-![Output10](output.png)
+![alt text](image-19.png)
 
 
 ## RESULT
